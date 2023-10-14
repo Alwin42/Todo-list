@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}"> 
+    <style> 
+    body {
+        font-family: 'Times New Roman', 'Times', 'serif';
+        background-color: aqua; 
+    } 
+ h1, h2
+ { text-align: center; 
+}
+ .input-container
+ {
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+    gap: 10px;
+ }
+ 
+ #input-todo 
+ { 
+    width: 200px;
+    height: 30px;
+    font-size: 1.24rem;
+ }
+
+ #add-todo {
+    height: 40px;
+    width: 50px;
+    border-radius: 30px;
+    border: none;
+    background-color: lightcoral;
+    font-size: 1.23rem;
+    cursor: pointer;
+ }
+.todo-container 
+{
+    width: 80vw; margin:auto;
+    display: flex ;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+
+}
+.todo 
+{
+    background-color: lightseagreen;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px,10px;
+    font-size: 1.2rem;
+
+    }
+.actions>form 
+{
+display: inline;
+}
+.actions>form>button 
+{ 
+    font-family: 'Times New Roman', 'Times', 'serif';
+    background-color: red;
+    color: beige;
+    border: none;
+    padding: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 10px;
+
+}
+</style>
+</head>
+     <body>
+
+    <center> <h2> Hello user </h2> </center>
+    <form action="/home" class="input-container" method="POST" >
+        <input type="text" placeholder="Enter the ToDo's" id="input-todo" name=" todo name"> 
+        <button id="ToDo"> + </button>
+    </form>
+    
+    
+    <h2> Todo's </h2>
+    <div class="todo-container">
+        {{% for item in items %}}
+        <div class="todo">
+            <p> {{ item.name }} </p>
+            <div class="actions"> 
+                <form action="{{ url_for('checked_todo' , todo_id=item.id )}}" method="post">  
+                <input type="checkbox" {% if item.checked %} checked {% endif %} onchange ="this.form.submit()"> 
+                
+            </form>
+                <form action="{{ url_for('delete_todo' , todo=item.id)}}" method="post">  
+                <button> Delete </button>
+             </form>
+            </div>
+            </div> 
+        </div>
+        {{% endfor %}}
+
+</body>
+</html>      
